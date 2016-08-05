@@ -1,8 +1,10 @@
 'use strict';
+let {formatTags,countBarcodes,buildCartItems,buildPromotedItems,calculateTotalPrices,buildReceipt,buildReceiptString,printReceipt} = require("../main/main");
+let {loadAllItems, loadPromotions} = require("../test/fixtures");
 
 describe('pos', () => {
 
-  it('should format the tags', ()=> {
+  fit('should format the tags', ()=> {
     let tags = ['ITEM0001', 'ITEM0002-3'];
     let formattedTags = formatTags(tags);
     let expected = [
@@ -12,7 +14,7 @@ describe('pos', () => {
     expect(formattedTags).toEqual(expected);
   });
 
-  it('countBarcodes', ()=> {
+  fit('countBarcodes', ()=> {
     let formattedTags = [
       {barcode: 'ITEM0001', count: 1},
       {barcode: 'ITEM0002', count: 3},
@@ -26,7 +28,7 @@ describe('pos', () => {
     expect(countedBarcodes).toEqual(expected);
   });
 
-  it('buildCartItems', ()=> {
+  fit('buildCartItems', ()=> {
     let allItems = loadAllItems();
     let countedBarcodes = [
       {barcode: 'ITEM000000', count: 2},
@@ -40,7 +42,7 @@ describe('pos', () => {
     expect(cartItems).toEqual(expected);
   });
 
-  it('buildPromotedItems', ()=> {
+  fit('buildPromotedItems', ()=> {
     let cartItems = [
       {barcode: 'ITEM000000', name: '可口可乐', unit: '瓶', price: 3.00, count: 11},
       {barcode: 'ITEM000000', name: '可口可乐', unit: '瓶', price: 3.00, count: 10}
@@ -60,7 +62,7 @@ describe('pos', () => {
     expect(promotedItems).toEqual(expected);
   });
 
-  it('calculateTotalPrices', () => {
+  fit('calculateTotalPrices', () => {
     let promotedItems = [
       {
         barcode: 'ITEM000000', name: '可口可乐', unit: '瓶', price: 3.00, count: 11,
@@ -79,7 +81,7 @@ describe('pos', () => {
     expect(totalPrices).toEqual(expected);
   });
 
-  it('buildReceipt without saved', () => {
+  fit('buildReceipt without saved', () => {
     let promotedItems = [
       {
         barcode: 'ITEM000000', name: '可口可乐', unit: '瓶', price: 3.00, count: 10,
@@ -104,7 +106,7 @@ describe('pos', () => {
     expect(receipt).toEqual(expected);
   });
 
-  it('buildReceipt with saved items', () => {
+  fit('buildReceipt with saved items', () => {
     let promotedItems = [
       {
         barcode: 'ITEM000000', name: '可口可乐', unit: '瓶', price: 3.00, count: 11,
@@ -134,7 +136,7 @@ describe('pos', () => {
     expect(receipt).toEqual(expected);
   });
 
-  it('should print text for items has promoted', () => {
+  fit('should print text for items has promoted', () => {
     let tags = [
       'ITEM000000', 'ITEM000000', 'ITEM000000', 'ITEM000000', 'ITEM000000', 'ITEM000000', 'ITEM000000', 'ITEM000000', 'ITEM000000', 'ITEM000000', 'ITEM000000',
       'ITEM000001', 'ITEM000001', 'ITEM000001', 'ITEM000001', 'ITEM000001',
@@ -159,7 +161,7 @@ describe('pos', () => {
     expect(console.log).toHaveBeenCalledWith(expectText);
   });
 
-  it('should print text for items with no one has promoted', () => {
+  fit('should print text for items with no one has promoted', () => {
 
     let tags = [
       'ITEM000000', 'ITEM000000', 'ITEM000000',
